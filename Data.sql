@@ -170,25 +170,25 @@ INSERT INTO saveur(nom_saveur) VALUES
 ('Raisin');
 
 -- Insertion des produits avec leurs saveurs
+INSERT INTO produit (nom_produit, id_categorie, id_saveur, image_produit) VALUES
+('Baguette Tradition', 1, 1, "BaguetteTradition.jpg"),         -- 
+('Croissant', 2, 1, "Croissant.jpg"),                  -- 
+('Pain au Chocolat', 2, 2, "PainChocolat.jpg"),           -- 
+('Brioche', 2, 1, "Brioche.jpg"),                    -- 
+('Tarte aux Pommes', 2, 5, "TartePommes.jpg"),           -- 
+('Tartelette a la Cannelle', 2, 4, "TarteletteCannelle.jpg"),   -- 
+('Pain de Mie', 1, 1, "PainMie.jpg"),                -- 
+('Brioche au Miel', 2, 8, "BriocheMiel.jpg"),            -- 
+('Tartes aux Pepites de Chocolat', 2, 2, "TartesPepitesChocolat.jpg"), -- 
+('Gateau aux Raisins Secs', 2, 11, "GateauRaisinsSecs.jpg"),   -- 
+('Crepes au Praline', 2, 10, "CrepesPraline.jpg"),         -- 
+('Pain au Chocolat aux Amandes', 2, 9, "PainChocolatAmandes.jpg"), -- 
+('Tarte au Citron', 2, 6, "TarteCitron.jpg"),            -- 
+('Gateau a la Noisette', 2, 7, "GateauNoisette.jpg"),       -- 
+('Eclair au Chocolat', 2, 2, "EclairChocolat.jpg"),         -- 
+('Macaron a la Vanille', 2, 3, "MacaronVanille.jpg");   
 INSERT INTO produit (nom_produit, id_categorie, id_saveur) VALUES
-('Baguette Tradition', 1, 1),         -- 
-('Croissant', 2, 1),                  -- 
-('Pain au Chocolat', 2, 2),           -- 
-('Brioche', 2, 1),                    -- 
-('Tarte aux Pommes', 2, 5),           -- 
-('Tartelette a la Cannelle', 2, 4),   -- 
-('Pain de Mie', 1, 1),                -- 
-('Brioche au Miel', 2, 8),            -- 
-('Tartes aux Pepites de Chocolat', 2, 2), -- 
-('Gateau aux Raisins Secs', 2, 11),   -- 
-('Crepes au Praline', 2, 10),         -- 
-('Pain au Chocolat aux Amandes', 2, 9), -- 
-('Tarte au Citron', 2, 6),            -- 
-('Gateau a la Noisette', 2, 7),       -- 
-('Eclair au Chocolat', 2, 2),         -- 
-('Macaron a la Vanille', 2, 3);   
-INSERT INTO produit (nom_produit, id_categorie, id_saveur) VALUES
-('Grefi', 2, 1);   
+('Grefi', 2, 1, "Grefi.jpg");   
 
 -- Production de Baguettes Tradition
 INSERT INTO production (nbr_produit, date_production, id_produit) VALUES
