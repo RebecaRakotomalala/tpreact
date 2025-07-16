@@ -16,6 +16,10 @@ function Home() {
     const handleClick3 = () => {
       navigate('/vente'); 
     };
+
+    const handleClick4 = () => {
+      navigate('/prix'); 
+    };
   
   return (
     <div className="App">
@@ -32,6 +36,9 @@ function Home() {
             </button>
             <button className="primary-btn" onClick={handleClick3}>
               Vente
+            </button>
+            <button className="primary-btn" onClick={handleClick4}>
+              Prix Produit
             </button>
           </div>
         </div>

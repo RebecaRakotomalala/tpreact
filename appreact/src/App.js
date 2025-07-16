@@ -4,6 +4,7 @@ import VendeursList from './components/VendeursList';
 import ProduitsList from './components/ProduitsList';
 import ProduitSaveur from './components/ProduitSaveur';
 import Vente from './components/Vente';
+import PrixProduit from './components/PrixProduit';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/produits" element={<ProduitsList />} />
         <Route path="/produitsSaveur" element={<ProduitSaveur />} />
         <Route path="/vente" element={<Vente />} />
+        <Route path="/prix" element={<PrixProduit />} />
       </Routes>
     </Router>
   );

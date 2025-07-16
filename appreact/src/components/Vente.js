@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './vente.css';
 
 function Vente() {
   const [ventes, setVentes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -50,6 +52,9 @@ function Vente() {
 
   return (
     <div className="App">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ⬅ Retour
+      </button>
     <div className="vente-container">
       <h2>Liste des Ventes</h2>
       <ul>

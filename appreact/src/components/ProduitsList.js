@@ -8,31 +8,49 @@ function ProduitsList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/produits')
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchProduits = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/produits');
+        const data = await response.json();
         console.log("Reçus:", data);
         setProduits(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Erreur :", err);
+      } finally {
         setLoading(false);
-      });
-  }, []);
+      }
+    };
+  
+    fetchProduits();
+  }, []);
 
   if (loading) return <p>Chargement...</p>;
 
   return (
     <div className="App">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ⬅ Retour
+      </button>
       <header className="hero-section">
         <div className="hero-content">
-          <h1>Liste des produits</h1>
-          <ul>
+        <h1>Nos délicieuses pâtisseries</h1>
+          <div className="produits-grid">
             {produits.map(p => (
-              <li key={p.id_produit}>{p.nom_produit}</li>
+              <div key={p.id_produit} className="produit-card">
+                <div className="produit-image-container">
+                <img 
+                  src={`/images/${p.image_produit}`} 
+                  alt={p.nom_produit}
+                  className="produit-image"
+                  onError={(e) => {
+                    e.target.src = '/images/placeholder.jpg';
+                  }}
+                />
+                </div>
+                <h3>{p.nom_produit}</h3>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </header>
     </div>

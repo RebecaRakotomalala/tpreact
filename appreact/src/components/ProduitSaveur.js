@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './VendeursList.css';
 
 function ProduitSaveur() {
@@ -6,6 +7,7 @@ function ProduitSaveur() {
   const [produits, setProduits] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     saveurRef.current?.focus();
@@ -41,6 +43,9 @@ function ProduitSaveur() {
 
   return (
     <div className="App">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ⬅ Retour
+      </button>
       <header className="hero-section">
         <div className="hero-content">
           <h1>Rechercher des produits par saveur</h1>

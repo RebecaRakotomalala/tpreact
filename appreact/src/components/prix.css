@@ -1,0 +1,155 @@
+/* prix.css */
+.prix-background {
+    width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.prix-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    color: white;
+    box-sizing: border-box;
+}
+
+.prix-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.date-selectors {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.date-selector-group {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.date-selector-group label {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.date-selector-group input {
+    padding: 0.6rem 0.8rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.date-selector-group input:focus {
+    border-color: white;
+    outline: none;
+    background: rgba(255,255,255,0.2);
+}
+
+.chart-wrapper {
+    width: 100%;
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.chart-container {
+    width: 100%;
+    height: 500px;
+}
+
+.back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.back-button:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.loading-message, .error-message, .empty-message {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.loading-message {
+    background: rgba(255,255,255,0.1);
+}
+
+.error-message {
+    background: rgba(231, 76, 60, 0.2);
+}
+
+.empty-message {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .prix-container {
+        padding: 1rem;
+    }
+    
+    .date-selectors {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .chart-container {
+        height: 350px;
+    }
+    
+    .chart-wrapper {
+        padding: 1rem;
+    }
+    
+    .prix-container h2 {
+        font-size: 1.6rem;
+        margin-top: 3rem;
+    }
+
+    .back-button {
+        top: 1rem;
+        left: 1rem;
+    }
+}
