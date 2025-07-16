@@ -4,6 +4,11 @@ import './VendeursList.css';
 function ProduitsList() {
   const [produits, setProduits] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/produits'); 
+  };
 
   useEffect(() => {
     fetch('http://localhost:8000/api/produits')
@@ -32,6 +37,11 @@ function ProduitsList() {
             ))}
           </ul>
         </div>
+        <div className="cta-buttons">
+            <button className="primary-btn" onClick={handleClick}>
+              Commencer
+            </button>
+          </div>
       </header>
     </div>
   );

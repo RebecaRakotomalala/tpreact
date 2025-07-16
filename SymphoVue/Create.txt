@@ -1,0 +1,9 @@
+composer create-project symfony/skeleton task-api
+cd task-api
+
+composer require symfony/twig-bundle    ( Rendu HTML côté Symfony )
+composer require symfony/serializer-pack  ( Transformer objets ↔ JSON )
+composer require symfony/validator ( Valider les données )
+composer require symfony/orm-pack
+composer require doctrine/annotations
+composer require nelmio/cors-bundle

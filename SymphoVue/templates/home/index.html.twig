@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Liste des catégories</title>
+</head>
+<body>
+    <h1>Liste des catégories</h1>
+    <ul>
+        {% for categorie in categories %}
+            <li>{{ categorie.nom }}</li>
+        {% else %}
+            <li>Aucune catégorie trouvée.</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('formulaire') }}">Aller au formulaire</a>
+</body>
+</html>

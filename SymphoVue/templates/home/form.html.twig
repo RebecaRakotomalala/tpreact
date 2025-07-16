@@ -1,0 +1,27 @@
+{# templates/form.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recherche de catégorie</title>
+</head>
+<body>
+    <h1>Rechercher une catégorie</h1>
+    <form action="{{ path('formulaire') }}" method="post">
+        <label for="nom">Nom :</label>
+        <input type="text" name="nom" id="nom">
+        <button type="submit">Valider</button>
+    </form>
+
+    {% if result is defined %}
+        <h2>Résultats :</h2>
+        <ul>
+            {% for categorie in result %}
+                <li>{{ categorie.nom }}</li>
+            {% else %}
+                <li>Aucun résultat trouvé</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
