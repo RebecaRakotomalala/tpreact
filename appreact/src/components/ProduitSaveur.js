@@ -50,28 +50,40 @@ function ProduitSaveur() {
         <div className="hero-content">
           <h1>Rechercher des produits par saveur</h1>
 
-          <form onSubmit={chercherProduits} style={{ marginBottom: "1em" }}>
+          <form onSubmit={chercherProduits} className="search-form">
             <input
               type="text"
               ref={saveurRef}
-              placeholder="Ex: Nature"
-              style={{ padding: "8px", marginRight: "10px" }}
+              placeholder="Ex: Nature, Chocolat, etc."
+              className="search-input"
             />
-            <button type="submit" className="primary-btn">
+            <button type="submit" className="primary-btn search-button">
               Rechercher
             </button>
           </form>
 
           {loading && <p>Chargement...</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p className="error-message">{error}</p>}
 
-          <ul>
-            {produits.map(p => (
-              <li key={p.id_produit}>
-                {p.nom_produit}
-              </li>
-            ))}
-          </ul>
+          {produits.length > 0 && (
+            <div className="produits-grid">
+              {produits.map(p => (
+                <div key={p.id_produit} className="produit-card">
+                  <div className="produit-image-container">
+                    <img 
+                      src={`/images/${p.image_produit}`} 
+                      alt={p.nom_produit}
+                      className="produit-image"
+                      onError={(e) => {
+                        e.target.src = '/images/placeholder.jpg';
+                      }}
+                    />
+                  </div>
+                  <h3>{p.nom_produit}</h3>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </header>
     </div>
