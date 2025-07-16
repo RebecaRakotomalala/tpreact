@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './VendeursList.css'; 
+import { useNavigate } from 'react-router-dom';
 
 function ProduitsList() {
   const [produits, setProduits] = useState([]);
@@ -7,7 +8,7 @@ function ProduitsList() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/produits'); 
+    navigate('/produitsSaveur'); 
   };
 
   useEffect(() => {
@@ -39,7 +40,7 @@ function ProduitsList() {
         </div>
         <div className="cta-buttons">
             <button className="primary-btn" onClick={handleClick}>
-              Commencer
+              Produit / Saveur
             </button>
           </div>
       </header>
