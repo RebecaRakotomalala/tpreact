@@ -8,6 +8,14 @@ function Home() {
     const handleClick = () => {
       navigate('/produits'); 
     };
+
+    const handleClick2 = () => {
+      navigate('/produitsSaveur'); 
+    };
+
+    const handleClick3 = () => {
+      navigate('/vente'); 
+    };
   
   return (
     <div className="App">
@@ -17,7 +25,13 @@ function Home() {
           <p className="subtitle">Découvrez une expérience unique et moderne</p>
           <div className="cta-buttons">
             <button className="primary-btn" onClick={handleClick}>
-              Commencer
+              Produit
+            </button>
+            <button className="primary-btn" onClick={handleClick2}>
+              Saveur
+            </button>
+            <button className="primary-btn" onClick={handleClick3}>
+              Vente
             </button>
           </div>
         </div>

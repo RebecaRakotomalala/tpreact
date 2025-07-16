@@ -7,10 +7,6 @@ function ProduitsList() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate('/produitsSaveur'); 
-  };
-
   useEffect(() => {
     fetch('http://localhost:8000/api/produits')
       .then((res) => res.json())
@@ -38,11 +34,6 @@ function ProduitsList() {
             ))}
           </ul>
         </div>
-        <div className="cta-buttons">
-            <button className="primary-btn" onClick={handleClick}>
-              Produit / Saveur
-            </button>
-          </div>
       </header>
     </div>
   );

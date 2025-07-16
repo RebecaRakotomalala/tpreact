@@ -10,9 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Produit
 {
     #[ORM\Id]
+    #[ORM\Column(type: "integer", name: "id_produit")]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    #[Groups(['produit:read'])]
     private ?int $id_produit = null;
 
     #[ORM\Column(length: 255)]
