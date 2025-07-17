@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import '../App.css';
+import '../components/Home.css';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/public/logo.jpg';
 
 function Home() {
     const navigate = useNavigate();
@@ -19,23 +20,28 @@ function Home() {
   
   return (
     <div className="App">
-      <header className="hero-section">
+      <div className="hero-section">
         <div className="hero-content">
-          <h1>Bienvenue sur Mon Application</h1>
-          <p className="subtitle">Découvrez une expérience unique et moderne</p>
+          <img src={logo} alt="Image fond" />
+
+          <h1>Votre boulanger de quartier, depuis toujours.</h1>
+          <p className="subtitle">Application web qui permet de consulter facilement la liste de nos produits de boulangerie.</p>
           <div className="cta-buttons">
             <button className="primary-btn" onClick={handleClick}>
-              Produit
+              Produits
             </button>
-            <button className="primary-btn" onClick={handleClick2}>
-              Saveur
+            <button className="secondary-btn" onClick={handleClick2}>
+              Saveurs
             </button>
-            <button className="primary-btn" onClick={handleClick3}>
-              Vente
+            <button className="secondary-btn" onClick={handleClick3}>
+              Ventes
             </button>
           </div>
         </div>
-      </header> 
+
+        <div className='hero-image'>  </div>
+        
+      </div> 
     </div>
   );
 }

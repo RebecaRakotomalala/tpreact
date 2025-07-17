@@ -66,6 +66,7 @@ CREATE TABLE produit(
    nom_produit VARCHAR(50)  NOT NULL,
    id_categorie INTEGER not NULL,
    id_saveur INTEGER,
+   image_produit VARCHAR(250) NOT NULL,
    PRIMARY KEY(id_produit),
    foreign key (id_categorie) REFERENCES categorie(id_categorie),
    foreign key (id_saveur) REFERENCES saveur(id_saveur)

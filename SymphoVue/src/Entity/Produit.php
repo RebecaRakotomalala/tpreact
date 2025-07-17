@@ -30,6 +30,10 @@ class Produit
     #[ORM\JoinColumn(name: 'id_saveur', referencedColumnName: 'id_saveur')]
     private ?Saveur $saveur = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['produit:read'])]
+    private ?string $image_produit = null;
+
     // === Getters & Setters ===
 
     public function getIdProduit(): ?int
@@ -80,4 +84,16 @@ class Produit
         $this->saveur = $saveur;
         return $this;
     }
+
+    public function getImageProduit(): ?string
+    {
+        return $this->image_produit;
+    }
+
+    public function setImageProduit(?string $image): self
+    {
+        $this->image_produit = $image;
+        return $this;
+    }
+
 }

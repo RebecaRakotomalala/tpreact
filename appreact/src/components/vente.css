@@ -1,20 +1,33 @@
 /* vente.css */
-.App {
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-    /* padding: 5rem 1rem;
+.App-vente {
+    /* background: linear-gradient(135deg, #6e8efb, #a777e3); */
+    padding: 5rem 1rem;
     min-height: 70vh;
     display: flex;
     align-items: center;
-    justify-content: center; */
+    justify-content: center; 
   }
 
 .vente-container {
     padding: 2rem;
-    max-width: 1000px;
+    /* background-color: rgb(23, 128, 219); */
+    width: 60%;
     margin: 0 auto;
     animation: fadeIn 0.5s ease-out;
+    border-radius: 10px;
+    justify-content: center;
+    justify-items: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
+.section-image-vente{
+    width:40%;
+    background-image: url('../assets/public/fond.jpg');
+    background-size: cover;
+    background-position:right center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
 .vente-container h2 {
     text-align: center;
     color: #2c3e50;
@@ -24,11 +37,11 @@
 
 .vente-container h3 {
     text-align: center;
-    color: #6e8efb;
+    /* color: #6e8efb; */
     margin-top: 2rem;
     font-size: 1.5rem;
     padding: 1rem;
-    background-color: rgba(110, 142, 251, 0.1);
+    background-color: #e0b181;
     border-radius: 8px;
 }
 
@@ -37,6 +50,25 @@
     padding: 0;
     display: grid;
     gap: 1rem;
+}
+
+
+ .back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    background: #a15406;
+    border: none;
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    z-index: 10;
 }
 
 .vente-container li {
@@ -101,4 +133,30 @@
     .vente-container h3 {
         font-size: 1.2rem;
     }
+}
+
+.styled-table{
+    width:100%;
+    margin:30px auto;
+    border-collapse: collapse;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border:1px solid #ddd;
+    text-align: left;
+}
+
+.styled-table thead{
+    background-color: #a15406;
+    color:white;
+}
+
+.styled-table tbody
+tr:nth-child(even) {
+    background-color: #e0b181;
 }

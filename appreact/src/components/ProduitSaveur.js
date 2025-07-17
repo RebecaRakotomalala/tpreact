@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './VendeursList.css';
 
 function ProduitSaveur() {
@@ -6,6 +7,7 @@ function ProduitSaveur() {
   const [produits, setProduits] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     saveurRef.current?.focus();
@@ -30,44 +32,74 @@ function ProduitSaveur() {
         return res.json();
       })
       .then((data) => {
+        if (Array.isArray(data) && data.length === 0) {
+          setError("Aucun produit trouvé pour cette saveur.");
+        } else {
+          setError(null);
+        }
         setProduits(data);
       })
       .catch((err) => {
         console.error("Erreur :", err);
         setError("Aucun produit trouvé ou erreur réseau.");
+        setProduits([]);
       })
       .finally(() => setLoading(false));
   };
 
   return (
     <div className="App">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ⬅ Retour
+      </button>
       <header className="hero-section">
         <div className="hero-content">
-          <h1>Rechercher des produits par saveur</h1>
+          <h1>Produits par saveur</h1>
 
-          <form onSubmit={chercherProduits} style={{ marginBottom: "1em" }}>
+          <form onSubmit={chercherProduits} className="search-form">
             <input
               type="text"
               ref={saveurRef}
-              placeholder="Ex: Nature"
-              style={{ padding: "8px", marginRight: "10px" }}
+              placeholder="Ex: Nature, Chocolat, etc."
+              className="search-input"
             />
-            <button type="submit" className="primary-btn">
+            <button type="submit" className="primary-btn-saveur search-button">
               Rechercher
             </button>
           </form>
 
           {loading && <p>Chargement...</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p className="error-message">{error}</p>}
 
-          <ul>
-            {produits.map(p => (
-              <li key={p.id_produit}>
-                {p.nom_produit}
-              </li>
-            ))}
-          </ul>
+          {!loading && !error && produits.length === 0 && (
+            <p>Aucun produit à afficher.</p>
+          )}
+
+          {produits.length > 0 && (
+            <div className="produits-grid">
+              {produits.map(p => {
+                console.log("Image produit:", `"${p.image_produit}"`);
+                return (
+                  <div key={p.id_produit} className="produit-card">
+                    <div className="produit-image-container">
+                      <img 
+                        src={`/images/${p.image_produit}`} 
+                        alt={p.nom_produit}
+                        className="produit-image"
+                        onError={(e) => {
+                          e.target.onerror = null; // évite boucle infinie
+                          e.target.src = '/images/placeholder.jpg';
+                        }}
+                      />
+                    </div>
+                    <h3>{p.nom_produit}</h3>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
+        <div className='hero-image'></div>
       </header>
     </div>
   );

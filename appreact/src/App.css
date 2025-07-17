@@ -1,12 +1,13 @@
-.App {
+/* .App {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
+  background-color: red;
   height: 100%;
   width: 100%;
-}
+} */
 
-.hero-section {
+/* .hero-section {
   background: linear-gradient(135deg, #6e8efb, #a777e3);
   color: white;
   padding: 5rem 1rem;
@@ -124,5 +125,5 @@ button {
   button {
     width: 100%;
     max-width: 250px;
-  }
-}
+  } */
+/* } */
