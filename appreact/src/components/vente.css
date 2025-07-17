@@ -162,33 +162,24 @@ tr:nth-child(even) {
 }
 
 
-/* Ajoutez ces styles à votre vente.css */
-
-/* Style pour les lignes sélectionnées */
-.selected-row {
-    background-color: #ffcccc !important; /* Rouge clair */
-    color: #d32f2f; /* Texte rouge foncé */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
   }
   
-  /* Effet de survol pour toutes les lignes */
-  .styled-table tbody tr:hover {
-    background-color: #f5f5f5;
-    transition: background-color 0.2s ease;
-  }
-  
-  /* Éviter le conflit hover/selected */
-  .styled-table tbody tr.selected-row:hover {
-    background-color: #ffaaaa !important;
-  }
-  
-  /* Style pour indiquer que la ligne est cliquable */
-  .styled-table tbody tr {
+  .pagination button {
+    padding: 6px 12px;
+    border: none;
+    background-color: #eee;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    border-radius: 4px;
   }
   
-  /* Optionnel : style pour la checkbox */
-  .styled-table tbody tr td input[type="checkbox"] {
-    cursor: pointer;
-    transform: scale(1.2);
+  .pagination button.active {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
   }
+  

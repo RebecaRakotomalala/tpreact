@@ -7,7 +7,8 @@ function Vente() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -20,11 +21,11 @@ function Vente() {
 
   // Fonction mémorisée pour récupérer les ventes
   const fetchVentes = useCallback(() => {
-    console.log("Chargement depuis le fichier JSON local");
+    console.log("Appel à fetchVentes");
     setLoading(true);
-    fetch('/ventes.json') // relatif à la racine public/
+    fetch('/ventes.json')
       .then((res) => {
-        if (!res.ok) throw new Error("Erreur de chargement JSON");
+        if (!res.ok) throw new Error("Erreur réseau");
         return res.json();
       })
       .then((data) => {
@@ -48,6 +49,14 @@ function Vente() {
     return ventes.reduce((total, v) => total + parseFloat(v.prix_vente), 0);
   }, [ventes]);
 
+  const ventesPage = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return ventes.slice(startIndex, endIndex);
+  }, [ventes, currentPage]);
+
+  const totalPages = Math.ceil(ventes.length / itemsPerPage);
+
   if (loading) return <p>Chargement des ventes...</p>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
@@ -59,7 +68,7 @@ function Vente() {
     <div className="vente-container">
       <button className="back-button" onClick={() => navigate(-1)}>
         ⬅ Retour
-      </button>-
+      </button>
       <h2>Liste des Ventes</h2>
       <table className="styled-table" border="1">
             <thead>
@@ -73,33 +82,53 @@ function Vente() {
                   </tr>
             </thead>
             <tbody>
-                   {ventes.map((vente) => (
-          <tr key={vente.id_vente}>
-            <td>{vente.nom_produit}</td>
-            <td>{vente.nom_client}</td>
-            <td>{vente.nom_vendeur}</td>
-            <td>{vente.quantite}</td>
-            <td>{vente.prix_vente}</td>
-            <td>{formatDate(vente.date_vente)}</td>
-          </tr>
-        ))}
+              {ventesPage.map((vente) => (
+                <tr key={vente.id_vente}>
+                  <td>{vente.nom_produit}</td>
+                  <td>{vente.nom_client}</td>
+                  <td>{vente.nom_vendeur}</td>
+                  <td>{vente.quantite}</td>
+                  <td>{vente.prix_vente}</td>
+                  <td>{formatDate(vente.date_vente)}</td>
+                </tr>
+              ))}
             </tbody>
-
       </table>
+      <div className="pagination">
+        {currentPage > 2 && (
+          <>
+            <button onClick={() => setCurrentPage(1)} className={currentPage === 1 ? 'active' : ''}>
+              1
+            </button>
+            {currentPage > 3 && <span className="dots">...</span>}
+          </>
+        )}
 
-      
-      {/* <ul>
-        {ventes.map((v) => (
-          <li key={v.id_vente}>
-            Produit: <strong>{v.nom_produit}</strong> — 
-            Client: <strong>{v.nom_client}</strong> — 
-            Vendeur: <strong>{v.nom_vendeur}</strong> — 
-            Quantité: {v.quantite} — 
-            Prix: {v.prix_vente} Ar — 
-            Date: {formatDate(v.date_vente)}
-          </li>
-        ))}
-      </ul> */}
+        {Array.from({ length: totalPages }, (_, i) => i + 1)
+          .filter((page) =>
+            page === currentPage ||
+            page === currentPage - 1 ||
+            page === currentPage + 1
+          )
+          .map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={currentPage === page ? 'active' : ''}
+            >
+              {page}
+            </button>
+          ))}
+
+        {currentPage < totalPages - 1 && (
+          <>
+            {currentPage < totalPages - 2 && <span className="dots">...</span>}
+            <button onClick={() => setCurrentPage(totalPages)} className={currentPage === totalPages ? 'active' : ''}>
+              {totalPages}
+            </button>
+          </>
+        )}
+      </div>
       <h3>Total des ventes : {totalVentes.toLocaleString()} Ar</h3>
     </div>
 
