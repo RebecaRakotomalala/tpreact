@@ -166,20 +166,32 @@ tr:nth-child(even) {
     margin-top: 20px;
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
   }
   
   .pagination button {
-    padding: 6px 12px;
+    padding: 6px 10px;
     border: none;
-    background-color: #eee;
+    background-color: #f0f0f0;
     cursor: pointer;
     border-radius: 4px;
+    min-width: 30px;
   }
   
   .pagination button.active {
-    background-color: #007bff;
+    background-color: #a15406;
     color: white;
     font-weight: bold;
+  }
+  
+  .dots {
+    padding: 6px 10px;
+    color: #999;
+    user-select: none;
+  }
+  
+  .styled-table .selected {
+    background-color: rgba(255, 0, 0, 0.2); /* rouge clair */
   }
   

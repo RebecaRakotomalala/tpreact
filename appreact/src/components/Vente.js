@@ -9,6 +9,7 @@ function Vente() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const [selectedRows, setSelectedRows] = useState(new Set());
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -45,15 +46,29 @@ function Vente() {
 
   // useMemo pour calculer total des ventes (optimisé)
   const totalVentes = useMemo(() => {
-    console.log("Calcul du total des ventes");
-    return ventes.reduce((total, v) => total + parseFloat(v.prix_vente), 0);
-  }, [ventes]);
+    return ventes
+    .filter((v) => selectedRows.has(v.id_vente))
+    .reduce((total, v) => total + parseFloat(v.prix_vente), 0);
+  }, [ventes, selectedRows]);
+  // })();
 
   const ventesPage = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return ventes.slice(startIndex, endIndex);
   }, [ventes, currentPage]);
+
+  const toggleRowSelection = (id) => {
+    setSelectedRows((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };  
 
   const totalPages = Math.ceil(ventes.length / itemsPerPage);
 
@@ -71,28 +86,39 @@ function Vente() {
       </button>
       <h2>Liste des Ventes</h2>
       <table className="styled-table" border="1">
-            <thead>
-                  <tr>
-                      <th> Produit </th>
-                      <th> Client </th>
-                      <th> Vendeur </th>
-                      <th> Quantité </th>
-                      <th> Prix </th>
-                      <th> Date </th>
-                  </tr>
-            </thead>
-            <tbody>
-              {ventesPage.map((vente) => (
-                <tr key={vente.id_vente}>
-                  <td>{vente.nom_produit}</td>
-                  <td>{vente.nom_client}</td>
-                  <td>{vente.nom_vendeur}</td>
-                  <td>{vente.quantite}</td>
-                  <td>{vente.prix_vente}</td>
-                  <td>{formatDate(vente.date_vente)}</td>
-                </tr>
-              ))}
-            </tbody>
+        <thead>
+          <tr>
+            <th>✔</th>
+            <th>Produit</th>
+            <th>Client</th>
+            <th>Vendeur</th>
+            <th>Quantité</th>
+            <th>Prix</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ventesPage.map((vente) => (
+            <tr
+              key={vente.id_vente}
+              className={selectedRows.has(vente.id_vente) ? 'selected' : ''}
+            >
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedRows.has(vente.id_vente)}
+                  onChange={() => toggleRowSelection(vente.id_vente)}
+                />
+              </td>
+              <td>{vente.nom_produit}</td>
+              <td>{vente.nom_client}</td>
+              <td>{vente.nom_vendeur}</td>
+              <td>{vente.quantite}</td>
+              <td>{vente.prix_vente}</td>
+              <td>{formatDate(vente.date_vente)}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
       <div className="pagination">
         {currentPage > 2 && (
