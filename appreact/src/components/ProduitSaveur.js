@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './VendeursList.css';
+import '../assets/VendeursList.css';
 
 function ProduitSaveur() {
   const saveurRef = useRef();

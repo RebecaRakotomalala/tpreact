@@ -4,7 +4,7 @@ import { fetchPrixProduits } from '../store/prixSlice';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-import './prix.css';
+import '../assets/prix.css';
 import { useNavigate } from 'react-router-dom';
 
 function PrixProduit({ idProduit }) {
