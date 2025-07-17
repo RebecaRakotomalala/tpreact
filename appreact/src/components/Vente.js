@@ -20,11 +20,11 @@ function Vente() {
 
   // Fonction mémorisée pour récupérer les ventes
   const fetchVentes = useCallback(() => {
-    console.log("Appel à fetchVentes");
+    console.log("Chargement depuis le fichier JSON local");
     setLoading(true);
-    fetch('http://localhost:8000/api/ventes')
+    fetch('/ventes.json') // relatif à la racine public/
       .then((res) => {
-        if (!res.ok) throw new Error("Erreur réseau");
+        if (!res.ok) throw new Error("Erreur de chargement JSON");
         return res.json();
       })
       .then((data) => {
