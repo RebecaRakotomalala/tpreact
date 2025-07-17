@@ -1,0 +1,92 @@
+.App{
+  /* background-color: rgb(251, 255, 0); */
+}
+
+.hero-section{
+  /* background-color: brown; */
+  height: 100vh;
+  display: flex;
+  /* margin-top: 1%; */
+}
+
+.hero-content{
+  /* background-color: #a15406; */
+  width: 60%;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+  border-top-right-radius: 500px;
+  border-bottom-right-radius: 500px;
+  border-right: 30px solid #a15406;
+  padding: 1.2rem;
+}
+
+.hero-image {
+  background-image: url('../assets/public/fond.jpg');
+  width: 40%;
+  background-size: cover;
+  background-position:right center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+img{
+  width:35%;
+  height:35%;
+  margin-top: 10%;
+
+}
+
+.header{
+  margin-left:2%;
+  background-color: #a15406;
+  padding:0.2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  color:  #1a1a1a;
+  padding-top: 2%;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: #918f8c;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 5%;
+}
+
+.primary-btn {
+  padding: 1rem 2rem;
+  background-color: #a15406;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+    min-width: 200px; 
+}
+
+.primary-btn:hover {
+  background-color: #b95722;
+}
+
+.secondary-btn {
+  padding: 1rem 2rem;
+  border:2px solid #a15406;
+  font-size: 1.5rem;
+  background-color: white;
+  border-radius: 30px;
+  cursor: pointer;
+    min-width: 200px; 
+}
