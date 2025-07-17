@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+<!-- import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './vente.css';
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+function Vente() {
+  const [ventes, setVentes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const [selectedRows, setSelectedRows] = useState(new Set());
 
-## Available Scripts
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+  };
 
-In the project directory, you can run:
+  const fetchVentes = useCallback(() => {
+    setLoading(true);
+    fetch('/ventes.json')
+      .then((res) => {
+        if (!res.ok) throw new Error("Erreur réseau");
+        return res.json();
+      })
+      .then((data) => {
+        setVentes(data);
+      })
+      .catch((err) => {
+        console.error("Erreur :", err);
+        setError("Impossible de charger les ventes.");
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
-### `npm start`
+  useEffect(() => {
+    fetchVentes();
+  }, [fetchVentes]);
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  const toggleRowSelection = (id) => {
+    setSelectedRows((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  const totalVentes = useMemo(() => {
+    return ventes
+      .filter((v) => selectedRows.has(v.id_vente))
+      .reduce((total, v) => total + parseFloat(v.prix_vente), 0);
+  }, [ventes, selectedRows]);
 
-### `npm test`
+  if (loading) return <p>Chargement des ventes...</p>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  return (
+    <div className="App-vente">
+      <div className="vente-container">
+        <button className="back-button" onClick={() => navigate(-1)}>
+          ⬅ Retour
+        </button>
+        <h2>Liste des Ventes</h2>
+        <table className="styled-table" border="1">
+          <thead>
+            <tr>
+              <th>✔</th>
+              <th>Produit</th>
+              <th>Client</th>
+              <th>Vendeur</th>
+              <th>Quantité</th>
+              <th>Prix</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ventes.map((vente) => (
+              <tr
+                key={vente.id_vente}
+                className={selectedRows.has(vente.id_vente) ? 'selected' : ''}
+              >
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedRows.has(vente.id_vente)}
+                    onChange={() => toggleRowSelection(vente.id_vente)}
+                  />
+                </td>
+                <td>{vente.nom_produit}</td>
+                <td>{vente.nom_client}</td>
+                <td>{vente.nom_vendeur}</td>
+                <td>{vente.quantite}</td>
+                <td>{vente.prix_vente}</td>
+                <td>{formatDate(vente.date_vente)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <h3>Total des ventes sélectionnées : {totalVentes.toLocaleString()} Ar</h3>
+      </div>
 
-### `npm run build`
+      <div className="section-image-vente"> </div>
+    </div>
+  );
+}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default Vente; -->

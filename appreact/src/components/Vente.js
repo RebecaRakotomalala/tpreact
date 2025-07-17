@@ -68,7 +68,7 @@ function Vente() {
       }
       return newSet;
     });
-  };  
+  };
 
   const totalPages = Math.ceil(ventes.length / itemsPerPage);
 
