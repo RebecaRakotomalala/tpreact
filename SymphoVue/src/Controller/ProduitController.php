@@ -4,7 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
-use App\Repository\ProduitRepository;
+use App\Service\ProduitService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,9 +22,9 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/api/produits/saveur/{nomSaveur}', name: 'api_produits_by_nom_saveur', methods: ['GET'])]
-    public function getByNomSaveur(ProduitRepository $produitRepository, string $nomSaveur): JsonResponse
+    public function getByNomSaveur(ProduitService $produitRepository, string $nomSaveur): JsonResponse
     {
-        $produits = $produitRepository->findByNomSaveur($nomSaveur);
+        $produits = $produitRepository->getProduitsParSaveur($nomSaveur);
         return $this->json($produits, 200, [], ['groups' => 'produit:read']);
     }
 }
