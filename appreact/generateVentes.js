@@ -2,7 +2,7 @@ const fs = require('fs');
 const { faker } = require('@faker-js/faker');
 
 // Configuration des plages de données
-const NB_VENTES = 5000;
+const NB_VENTES = 20000;
 const ventes = [];
 
 for (let i = 0; i < NB_VENTES; i++) {
