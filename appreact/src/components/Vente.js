@@ -11,13 +11,16 @@ function Vente() {
   const itemsPerPage = 10;
   const [selectedRows, setSelectedRows] = useState(new Set());
 
+  const [dateDebut, setDateDebut] = useState('');
+  const [dateFin, setDateFin] = useState('');
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('fr-FR', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit'
-    });
+    }); 
   };
 
   // Fonction mémorisée pour récupérer les ventes
@@ -52,11 +55,32 @@ function Vente() {
   }, [ventes, selectedRows]);
   // })();
 
+  // Filtrage par date
+  const ventesFiltrees = useMemo(() => {
+    if (!dateDebut && !dateFin) return ventes;
+
+    const debut = dateDebut ? new Date(dateDebut) : null;
+    const fin = dateFin ? new Date(dateFin) : null;
+
+    return ventes.filter((vente) => {
+      const dateVente = new Date(vente.date_vente);
+      if (debut && dateVente < debut) return false;
+      if (fin && dateVente > fin) return false;
+      return true;
+    });
+  }, [ventes, dateDebut, dateFin]);
+
+  const totalPrixFiltre = (() => {
+    return ventesFiltrees.reduce((total, v) => total + parseFloat(v.prix_vente), 0);
+  // }, [ventesFiltrees]);  
+  })();
+
   const ventesPage = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return ventes.slice(startIndex, endIndex);
-  }, [ventes, currentPage]);
+    return ventesFiltrees.slice(startIndex, endIndex);
+  }, [ventesFiltrees, currentPage]);
+  
 
   const toggleRowSelection = (id) => {
     setSelectedRows((prev) => {
@@ -70,7 +94,7 @@ function Vente() {
     });
   };
 
-  const totalPages = Math.ceil(ventes.length / itemsPerPage);
+  const totalPages = Math.ceil(ventesFiltrees.length / itemsPerPage);
 
   if (loading) return <p>Chargement des ventes...</p>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
@@ -84,6 +108,18 @@ function Vente() {
       <button className="back-button" onClick={() => navigate(-1)}>
         ⬅ Retour
       </button>
+      <div className="filtre-dates">
+        <label>
+          Date de début :&nbsp;
+          <input type="date" value={dateDebut} onChange={(e) => setDateDebut(e.target.value)} />
+        </label>
+        &nbsp;&nbsp;
+        <label>
+          Date de fin :&nbsp;
+          <input type="date" value={dateFin} onChange={(e) => setDateFin(e.target.value)} />
+        </label>
+      </div>
+      <h3>Total (prix entre les dates) : <strong>{totalPrixFiltre.toLocaleString()} Ar</strong></h3>
       <h2>Liste des Ventes</h2>
       <table className="styled-table" border="1">
         <thead>
