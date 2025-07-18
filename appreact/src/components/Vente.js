@@ -81,6 +81,14 @@ function Vente() {
             <td>{vente.quantite}</td>
             <td>{vente.prix_vente}</td>
             <td>{formatDate(vente.date_vente)}</td>
+                <td> 
+                     <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={handleChange}
+                    />
+                </td>
+       
           </tr>
         ))}
             </tbody>
