@@ -1,14 +1,34 @@
+composer create-project symfony/skeleton task-api
+cd task-api
+
+composer require symfony/twig-bundle    ( Rendu HTML côté Symfony )
+composer require symfony/serializer-pack  ( Transformer objets ↔ JSON )
+composer require symfony/validator ( Valider les données )
+composer require symfony/orm-pack
+composer require doctrine/annotations
+composer require nelmio/cors-bundle
+
+
+
+
+
+
+
+
+
+
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './vente.css';
 
 function Vente() {
   console.log("🔄 COMPOSANT VENTE RE-RENDER");
+
   const [ventes, setVentes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  
+
   // Utilisation de useRef pour les données qui ne nécessitent pas de re-render
   const selectedRowsRef = useRef(new Set());
   const checkboxRefs = useRef({});
@@ -32,13 +52,17 @@ function Vente() {
         return res.json();
       })
       .then((data) => {
+        console.log("✅ DONNÉES CHARGÉES:", data.length, "ventes");
         setVentes(data);
       })
       .catch((err) => {
-        console.error("Erreur :", err);
+        console.error("❌ ERREUR FETCH:", err);
         setError("Impossible de charger les ventes.");
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        console.log("🏁 FETCH TERMINÉ");
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -47,16 +71,21 @@ function Vente() {
 
   // Fonction pour calculer le total
   const calculateTotal = useCallback(() => {
-    return ventes
+    console.log("💰 CALCUL TOTAL - Nombre d'éléments sélectionnés:", selectedRowsRef.current.size);
+    const total = ventes
       .filter((v) => selectedRowsRef.current.has(v.id_vente))
       .reduce((total, v) => total + parseFloat(v.prix_vente), 0);
+    console.log("💰 TOTAL CALCULÉ:", total);
+    return total;
   }, [ventes]);
 
   // Fonction pour mettre à jour le total dans le DOM
   const updateTotal = useCallback(() => {
+    console.log("📊 MISE À JOUR TOTAL DOM");
     if (totalRef.current) {
       const total = calculateTotal();
       totalRef.current.textContent = `Total des ventes sélectionnées : ${total.toLocaleString()} Ar`;
+      console.log("📊 TOTAL AFFICHÉ:", total.toLocaleString(), "Ar");
     }
   }, [calculateTotal]);
 
@@ -66,27 +95,42 @@ function Vente() {
     const selectedRows = selectedRowsRef.current;
     const checkbox = checkboxRefs.current[id];
     const row = checkbox?.closest('tr');
-    
+
     if (selectedRows.has(id)) {
+      console.log("❌ DÉSELECTION - ID:", id);
       selectedRows.delete(id);
-      if (checkbox) checkbox.checked = false;
-      if (row) row.classList.remove('selected');
+      if (checkbox) {
+        checkbox.checked = false;
+        console.log("☑️ CHECKBOX DÉCOCHÉE");
+      }
+      if (row) {
+        row.classList.remove('selected');
+        console.log("🎨 CLASSE 'selected' SUPPRIMÉE");
+      }
     } else {
+      console.log("✅ SÉLECTION - ID:", id);
       selectedRows.add(id);
-      if (checkbox) checkbox.checked = true;
-      if (row) row.classList.add('selected');
+      if (checkbox) {
+        checkbox.checked = true;
+        console.log("☑️ CHECKBOX COCHÉE");
+      }
+      if (row) {
+        row.classList.add('selected');
+        console.log("🎨 CLASSE 'selected' AJOUTÉE");
+      }
     }
-    
+
     // Mise à jour du total sans re-render
     updateTotal();
   }, [updateTotal]);
 
-  // Mémoisation des lignes pour éviter les re-renders inutiles
-  const ventesRows = useMemo(() => {
-    console.log("Rendering toutes les lignes - ceci ne devrait apparaître qu'une fois");
+  // Fonction pour créer les lignes sans useMemo
+  const createVentesRows = () => {
+    console.log("🏗️ CRÉATION DES LIGNES - Nombre de ventes:", ventes.length);
     return ventes.map((vente) => {
       const isSelected = selectedRowsRef.current.has(vente.id_vente);
-      
+      console.log("🔨 CRÉATION LIGNE - ID:", vente.id_vente, "- Sélectionnée:", isSelected);
+
       return (
         <tr
           key={vente.id_vente}
@@ -96,7 +140,10 @@ function Vente() {
             <input
               type="checkbox"
               ref={(el) => {
-                if (el) checkboxRefs.current[vente.id_vente] = el;
+                if (el) {
+                  checkboxRefs.current[vente.id_vente] = el;
+                  console.log("📎 REF CHECKBOX CRÉÉE - ID:", vente.id_vente);
+                }
               }}
               defaultChecked={isSelected}
               onChange={() => toggleRowSelection(vente.id_vente)}
@@ -111,16 +158,24 @@ function Vente() {
         </tr>
       );
     });
-  }, [ventes, toggleRowSelection]);
+  };
 
   // Mise à jour du total initial
   useEffect(() => {
+    console.log("🚀 EFFET - Mise à jour du total initial");
     updateTotal();
   }, [updateTotal]);
 
-  if (loading) return <p>Chargement des ventes...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (loading) {
+    console.log("⏳ ÉTAT LOADING");
+    return <p>Chargement des ventes...</p>;
+  }
+  if (error) {
+    console.log("❌ ÉTAT ERROR:", error);
+    return <p style={{ color: 'red' }}>{error}</p>;
+  }
 
+  console.log("🎨 RENDU PRINCIPAL DU COMPOSANT");
   return (
     <div className="App-vente">
       <div className="vente-container">
@@ -141,7 +196,7 @@ function Vente() {
             </tr>
           </thead>
           <tbody>
-            {ventesRows}
+            {createVentesRows()}
           </tbody>
         </table>
         <h3 ref={totalRef}>Total des ventes sélectionnées : 0 Ar</h3>
